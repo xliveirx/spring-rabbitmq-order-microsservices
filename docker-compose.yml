@@ -1,0 +1,17 @@
+services:
+  mysql:
+    container_name: 'orders-mysql'
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=orders'
+      - 'MYSQL_PASSWORD=admin'
+      - 'MYSQL_ROOT_PASSWORD=admin'
+      - 'MYSQL_USER=admin'
+    ports:
+      - '3306:3306'
+#
+#  rabbitmq:
+#    image: rabbitmq:3.13-management
+#    ports:
+#      - 15672:15672
+#      - 5672:5672
