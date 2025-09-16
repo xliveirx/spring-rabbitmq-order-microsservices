@@ -65,10 +65,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<User>> getUsers(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<UserResponse>> getUsers(@RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size) {
 
         var pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(userService.getUsers(pageable));
+
+        var response = userService.getUsers(pageable);
+
+        return ResponseEntity.ok(response.map(UserResponse::fromDomain));
     }
 }
