@@ -1,5 +1,6 @@
 package br.com.joao.orders_service.service;
 
+import br.com.joao.orders_service.exceptions.TokenValidationException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -23,7 +24,7 @@ public class TokenService {
 
         } catch(JWTVerificationException e){
 
-            throw new RuntimeException("Error validating JWT token");
+            throw new TokenValidationException();
         }
     }
 

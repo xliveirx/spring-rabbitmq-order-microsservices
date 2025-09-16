@@ -46,7 +46,7 @@ public class JWTFilterConfig extends OncePerRequestFilter {
 
     private String recoverToken(HttpServletRequest request) {
 
-        var authenticationHeader = request.getHeader("Authentication");
+        var authenticationHeader = request.getHeader("Authorization");
 
         if(authenticationHeader != null){
             return authenticationHeader.replace("Bearer ", "");
