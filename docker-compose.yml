@@ -3,10 +3,10 @@ services:
     container_name: 'orders-mysql'
     image: 'mysql:latest'
     environment:
-      - 'MYSQL_DATABASE=orders'
-      - 'MYSQL_PASSWORD=admin'
-      - 'MYSQL_ROOT_PASSWORD=admin'
-      - 'MYSQL_USER=admin'
+      MYSQL_DATABASE: orders
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: admin
     ports:
       - '3306:3306'
 
@@ -15,3 +15,44 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+
+  users-service:
+    build: ./users-service
+    container_name: users_service
+    depends_on:
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/orders
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+    ports:
+      - 8080:8080
+
+  orders-service:
+    build: ./orders-service
+    container_name: orders_service
+    depends_on:
+      - mysql
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/orders
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+    ports:
+      - 8081:8081
+
+  payment-service:
+    build: ./payment-service
+    container_name: payment_service
+    depends_on:
+      - rabbitmq
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+    ports:
+      - 8082:8082
+    
