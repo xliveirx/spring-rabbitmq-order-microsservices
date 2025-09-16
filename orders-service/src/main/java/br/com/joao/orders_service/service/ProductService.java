@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class OrderItemService {
-    
+public class ProductService {
+
     private final OrderItemRepository orderItemRepository;
 
-    public OrderItemService(OrderItemRepository orderItemRepository) {
+    public ProductService(OrderItemRepository orderItemRepository) {
         this.orderItemRepository = orderItemRepository;
     }
 
